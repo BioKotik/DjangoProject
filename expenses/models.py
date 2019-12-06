@@ -1,5 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls import reverse
+from django.conf import settings
 
 # Create your models here.
 class Record(models.Model):
@@ -7,3 +10,11 @@ class Record(models.Model):
     category = models.CharField(max_length=30)
     place = models.CharField(max_length=30)
     date = models.DateTimeField(auto_now_add=True)
+
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+    birthday = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return 'Profile for {}'.format(self.user.username)
