@@ -5,7 +5,7 @@ from django.views.generic import ListView
 # Create your views here.
 def all_records(request):
     a = 10
-    records = Record.objects.all()
+    records = Record.objects.all().order_by('date')
     return render(request, 'workplace.html', {'records': records})
 
 class RecordListView(ListView):
