@@ -10,6 +10,9 @@ class Record(models.Model):
     category = models.CharField(max_length=30)
     place = models.CharField(max_length=30)
     date = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               related_name='all_records')
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
