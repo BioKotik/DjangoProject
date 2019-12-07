@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 # Create your views here.
+@login_required
 def all_records(request):
     records = Record.objects.all().order_by('date')
     return render(request, 'workplace.html', {'records': records})
