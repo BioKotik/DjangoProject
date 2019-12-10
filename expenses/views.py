@@ -9,7 +9,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from .models import Profile
 
 # Create your views here.
 #@login_required
@@ -42,3 +43,19 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'log-in.html', {'form': form})
+
+
+# save data to DB
+def create(request):
+    if request.method == "POST":
+        profile = Profile()
+        profile.user = request.POST.get("user")
+        profile.birthday = request.POST.get("birthday")
+        profile.save()
+    return HttpResponseRedirect("/")
+
+
+# get all data from DB
+def index(request):
+    people = Profile.objects.all()
+    return render(request, "index.html", {"people": people})
