@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -11,7 +12,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/dashboard/">
 
     <!-- Bootstrap core CSS -->
-<link href="static/css/bootstrap.css" rel="stylesheet">
+<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
 
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -41,16 +42,16 @@
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="static/css/dashboard.css" rel="stylesheet">
+    <link href="{% static "css/dashboard.css" %}" rel="stylesheet">
   <style type="text/css">/* Chart.js */
 @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Hello, {{ request.user.first_name }}</a>
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
+      <a class="nav-link" href="{% url "expenses:logout" %}">Sign out</a>
     </li>
   </ul>
 </nav>
@@ -165,11 +166,13 @@
           <tbody>       
           {% for record in records.reverse %}
             <tr>
+              {% if request.user.first_name == record.author.first_name %}
               <td>{{ record.id }}</td>
               <td>{{ record.transaction }}</td>
               <td>{{ record.category }}</td>
               <td>{{ record.place }}</td>
               <td>{{ record.date }}</td>
+              {% endif %}
             </tr>
           {% endfor %}
           </tbody>
@@ -178,10 +181,10 @@
     </main>
   </div>
 </div>
-<script src="static/js/jquery-3.4.1.min.js"></script>
-      <script>window.jQuery || document.write('<script src="js/jquery-3.4.1.min.js"><\/script>')</script><script src="static/s/bootstrap.js"></script>
-        <script src="static/js/feather.min.js"></script>
-        <script src="static/js/Chart.min.js"></script>
-        <script src="static/js/dashboard.js"></script>
+<script src="{% static "js/jquery-3.4.1.min.js" %}"></script>
+      <script>window.jQuery || document.write('<script src="{% static "js/jquery-3.4.1.min.js" %}"></script>')</script><script src="{% static "js/jquery-3.4.1.min.js" %}"></script>
+        <script src="{% static "js/feather.min.js" %}"></script>
+        <script src="{% static "js/Chart.min.js" %}"></script>
+        <script src="{% static "js/dashboard.js" %}"></script>
 
 </body></html>

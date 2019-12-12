@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <!-- saved from url=(0051)https://getbootstrap.com/docs/4.4/examples/sign-in/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
@@ -11,7 +12,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/sign-in/">
 
     <!-- Bootstrap core CSS -->
-<link href="static/css/bootstrap.min.css" rel="stylesheet">
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
 
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -41,22 +42,23 @@
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="static/css/signin.css" rel="stylesheet">
+    <link href="{% static "css/signin.css" %}" rel="stylesheet">
   </head>
   <body class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" action="." method="post">
   <img class="mb-4" src="templates/log-in_files/bootstrap-solid.svg" alt="" width="72" height="72">
   <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
   <label for="inputUsername" class="sr-only">Username</label>
-  <input type="user" id="inputEmail" class="form-control" placeholder="Username" required="" autofocus="">
+  <input type="username" id="id_username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
   <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+  <input type="password" id="id_password" name="password" class="form-control" placeholder="Password" required="">
   <div class="checkbox mb-3">
     <label>
       <input type="checkbox" value="remember-me"> Remember me
     </label>
   </div>
-  <button class="btn btn-lg btn-primary btn-block" href="{% url "expenses:workplace" %}" type="submit">Sign in</button>
+  {% csrf_token %}
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   <p class="mt-5 mb-3 text-muted">© 2019</p>
 </form>
 

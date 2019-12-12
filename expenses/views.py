@@ -13,21 +13,20 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Profile
 
 # Create your views here.
-#@login_required
+@login_required
 def all_records(request):
     records = Record.objects.all().order_by('date')
     return render(request, 'workplace.html', {'records': records})
 
-"""class RecordListView(ListView):
+class RecordListView(ListView):
     queryset = Record.objects.all()
     context_object_name = 'records'
-    template_name = 'workplace.html'"""
+    template_name = 'workplace.html'
 
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-
             cd = form.cleaned_data
             user = authenticate(request,
                                 username=cd['username'],
@@ -35,7 +34,8 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('Authentificated successfully')
+                    return redirect('/workplace/')
+                    #return HttpResponse('Authentificated successfully')
                 else:
                     return HttpResponse('Disabled user')
             else:
