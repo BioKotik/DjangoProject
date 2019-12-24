@@ -3,17 +3,26 @@ from expenses.models import Record, Profile
 from expenses.forms import SendEmailForm, LoginForm
 from django.core.mail import send_mail
 from django.views.generic import ListView
-from django.views.generic.edit import FormView
-from django.contrib.auth.forms import UserCreationForm
-
 
 from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponse, HttpResponseRedirect
-from .models import Profile
+from django.http import HttpResponse
+from django.views.generic.edit import FormView
+from django.contrib.auth.forms import UserCreationForm
+
+
+class RegisterFormView(FormView):
+    form_class = UserCreationForm
+    success_url = "/login/"
+    template_name = "register.html"
+
+    def form_valid(self, form):
+        form.save()
+        return super(RegisterFormView, self).form_valid(form)
+
 
 # Create your views here.
 @login_required
@@ -26,6 +35,16 @@ class RecordListView(ListView):
     queryset = Record.objects.all()
     context_object_name = 'records'
     template_name = 'workplace.html'
+
+
+def create(request):
+    if request.method == "POST":
+        adding = Record()
+        adding.transaction = request.POST.get("transaction")
+        adding.category = request.POST.get("category")
+        adding.place = request.POST.get("place")
+        adding.save()
+    return render(request, 'add.html', {'create': create})
 
 
 def user_login(request):
@@ -48,29 +67,3 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'log-in.html', {'form': form})
-
-
-# save data to DB
-def create(request):
-    if request.method == "POST":
-        profile = Profile()
-        profile.user = request.POST.get("user")
-        profile.birthday = request.POST.get("birthday")
-        profile.save()
-    return HttpResponseRedirect("/")
-
-
-# get all data from DB
-def index(request):
-    people = Profile.objects.all()
-    return render(request, "index.html", {"people": people})
-
-
-class RegisterFormView(FormView):
-    form_class = UserCreationForm
-    success_url = "/login/"
-    template_name = "register.html"
-
-    def form_valid(self, form):
-        form.save()
-        return super(RegisterFormView, self).form_valid(form)

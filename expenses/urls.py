@@ -7,12 +7,13 @@ from django.conf.urls.static import static
 app_name = 'expenses'
 
 urlpatterns = [
-    path('', views.all_records, name='login'),
-    #path('', views.all_records, name='list_view'),
+    #path('', views.all_records, name='login'),
+    path('', views.all_records, name='list_view'),
     path('workplace/', views.all_records, name='list_view'),
+    path('add/', views.create, name='add'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_login, name='logout'),
-    path('register/', views.RegisterFormView.as_view(), name='register')
+    path('register/', views.RegisterFormView.as_view(), name='register'),
 ]
 
 if settings.DEBUG:
