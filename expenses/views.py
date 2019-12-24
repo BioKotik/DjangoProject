@@ -43,6 +43,7 @@ def create(request):
         adding.transaction = request.POST.get("transaction")
         adding.category = request.POST.get("category")
         adding.place = request.POST.get("place")
+        adding.author =  request.user
         adding.save()
     return render(request, 'add.html', {'create': create})
 

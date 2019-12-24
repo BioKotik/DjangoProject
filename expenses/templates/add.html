@@ -45,11 +45,12 @@
     <link href="{% static "css/form-validation.css" %}" rel="stylesheet">
   </head>
   <body class="bg-light">
+  <div class="col-md-8 order-md-1">
+    <a class="mb-3" href="/workplace">Back</a>
+  </div>
     <div class="container">
   <div class="py-5 text-center">
     <img class="d-block mx-auto mb-4" src="./registration_files/bootstrap-solid.svg" alt="" width="72" height="72">
-    <h2>Checkout form</h2>
-    <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
   </div>
 
   <div class="row">
@@ -59,7 +60,7 @@
     </div>
     <div class="col-md-8 order-md-1">
       <h4 class="mb-3">Add transaction</h4>
-      <form class="needs-validation" novalidate="">
+      <form class="needs-validation" novalidate="" action="." method="post">
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="firstName">Transaction amount</label>
@@ -81,6 +82,7 @@
         
         
         <hr class="mb-4">
+        {% csrf_token %}
         <button class="btn btn-primary btn-lg btn-block" type="submit">Confirm</button>
       </form>
     </div>
