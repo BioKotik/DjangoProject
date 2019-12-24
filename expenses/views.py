@@ -3,6 +3,9 @@ from expenses.models import Record, Profile
 from expenses.forms import SendEmailForm, LoginForm
 from django.core.mail import send_mail
 from django.views.generic import ListView
+from django.views.generic.edit import FormView
+from django.contrib.auth.forms import UserCreationForm
+
 
 from django.contrib.auth.models import User
 
@@ -18,10 +21,12 @@ def all_records(request):
     records = Record.objects.all().order_by('date')
     return render(request, 'workplace.html', {'records': records})
 
+
 class RecordListView(ListView):
     queryset = Record.objects.all()
     context_object_name = 'records'
     template_name = 'workplace.html'
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -59,3 +64,13 @@ def create(request):
 def index(request):
     people = Profile.objects.all()
     return render(request, "index.html", {"people": people})
+
+
+class RegisterFormView(FormView):
+    form_class = UserCreationForm
+    success_url = "/login/"
+    template_name = "register.html"
+
+    def form_valid(self, form):
+        form.save()
+        return super(RegisterFormView, self).form_valid(form)
