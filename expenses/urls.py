@@ -10,6 +10,7 @@ urlpatterns = [
     #path('', views.all_records, name='login'),
     path('', views.all_records, name='list_view'),
     path('workplace/', views.all_records, name='list_view'),
+    path('add/', views.create, name='add'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_login, name='logout'),
 ]

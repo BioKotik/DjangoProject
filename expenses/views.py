@@ -22,6 +22,15 @@ class RecordListView(ListView):
     context_object_name = 'records'
     template_name = 'workplace.html'
 
+def create(request):
+    if request.method == "POST":
+        adding = Record()
+        adding.transaction = request.POST.get("transaction")
+        adding.category = request.POST.get("category")
+        adding.place = request.POST.get("place")
+        adding.save()
+    return render(request, 'add.html', {'create': create})
+
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
