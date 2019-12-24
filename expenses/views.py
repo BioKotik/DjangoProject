@@ -10,6 +10,19 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponse
+from django.views.generic.edit import FormView
+from django.contrib.auth.forms import UserCreationForm
+
+
+class RegisterFormView(FormView):
+    form_class = UserCreationForm
+    success_url = "/login/"
+    template_name = "register.html"
+
+    def form_valid(self, form):
+        form.save()
+        return super(RegisterFormView, self).form_valid(form)
+
 
 # Create your views here.
 @login_required
@@ -17,10 +30,12 @@ def all_records(request):
     records = Record.objects.all().order_by('date')
     return render(request, 'workplace.html', {'records': records})
 
+
 class RecordListView(ListView):
     queryset = Record.objects.all()
     context_object_name = 'records'
     template_name = 'workplace.html'
+
 
 def create(request):
     if request.method == "POST":
@@ -30,6 +45,7 @@ def create(request):
         adding.place = request.POST.get("place")
         adding.save()
     return render(request, 'add.html', {'create': create})
+
 
 def user_login(request):
     if request.method == 'POST':
