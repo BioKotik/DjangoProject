@@ -1,14 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from expenses.models import Record, Profile
-from expenses.forms import SendEmailForm, LoginForm
-from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from expenses.models import Record
+from expenses.forms import LoginForm
 from django.views.generic import ListView
-
-from django.contrib.auth.models import User
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-
 from django.http import HttpResponse
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
@@ -43,7 +38,7 @@ def create(request):
         adding.transaction = request.POST.get("transaction")
         adding.category = request.POST.get("category")
         adding.place = request.POST.get("place")
-        adding.author =  request.user
+        adding.author = request.user
         adding.save()
     return render(request, 'add.html', {'create': create})
 
@@ -60,7 +55,7 @@ def user_login(request):
                 if user.is_active:
                     login(request, user)
                     return redirect('/workplace/')
-                    #return HttpResponse('Authentificated successfully')
+                    # return HttpResponse('Authentificated successfully')
                 else:
                     return HttpResponse('Disabled user')
             else:

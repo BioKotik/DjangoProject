@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.conf import settings
 
+
 # Create your models here.
 class Record(models.Model):
     transaction = models.FloatField(max_length=30)
@@ -13,6 +14,7 @@ class Record(models.Model):
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE,
                                related_name='all_records')
+
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,

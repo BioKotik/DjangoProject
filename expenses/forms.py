@@ -1,5 +1,4 @@
 from django import forms
-from .models import Record
 
 
 class LoginForm(forms.Form):
